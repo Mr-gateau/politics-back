@@ -5,9 +5,9 @@ const connection = require('../conf.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 3;
 
-postRouter.get('/', (req, res) => {
+postRouter.get('/all', (req, res) => {
       
-    connection.query("SELECT * FROM post JOIN depends ON post.depend = depends.id ", (err, results) => {
+    connection.query("SELECT post.id, post.title, post.intro, post.burn, post.cold FROM post JOIN depends ON post.depend = depends.id ", (err, results) => {
       if(err){
         res.status(404).send("Not found");
         console.log(err)
