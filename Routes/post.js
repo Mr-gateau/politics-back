@@ -7,7 +7,7 @@ const saltRounds = 3;
 
 postRouter.get('/', (req, res) => {
       
-    connection.query("SELECT * FROM post", (err, results) => {
+    connection.query("SELECT * FROM post JOIN depends ON post.depend = depends.id ", (err, results) => {
       if(err){
         res.status(404).send("Not found");
         console.log(err)
@@ -16,6 +16,18 @@ postRouter.get('/', (req, res) => {
           }
     })
   });
+
+  postRouter.get('/article/:id', (req, res) => {
+    const { id } = req.params
+    connection.query('SELECT * FROM post WHERE id = ?',id, (err, results) => {
+      if(err){
+        res.status(404).send("Not found...");
+        console.log(err)
+      } else {
+        res.status(200).json(results[0]);
+      }
+    })
+  })
 
 
 
