@@ -1,5 +1,5 @@
 CREATE TABLE post (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     user VARCHAR(50),
     key_post VARCHAR(50),
     title VARCHAR(50),
@@ -8,7 +8,6 @@ CREATE TABLE post (
     depend INT,
     burn INT,
     cold INT
-
 );
 
 DROP TABLE depends;

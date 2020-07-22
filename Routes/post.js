@@ -17,23 +17,15 @@ postRouter.get('/', (req, res) => {
     })
   });
 
+
+
   postRouter.post('/add', (req, res) => {
-    const { id, code } = req.params;
-    const passHash = bcrypt.hash(code, saltRounds, function(_, hash) {
-      return hash
-  });
-    toAdd ={
-      user :id,
-      key: '',
-      intro : '',
-      content: '',
-      depend: '',
-      burn: 0,
-      cold: 0
-    }
-    console.log(toAdd);
-    connection.query("INSERT INTO post VALUES ?", toAdd, (err, results) => {
+  
+    console.log(req.body);
+    const toAdd  = req.body
+    connection.query("INSERT INTO post SET ?", toAdd, (err, results) => {
     if(err){
+        console.log(err)
         res.status(500).send('Server error...');
     } else {
          res.status(201).send("it's okay!");
