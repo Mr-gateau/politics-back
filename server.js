@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors')
 const app = express();
 const port = 8000;
 const router = express.Router();
@@ -21,7 +22,7 @@ const aboutRoute = require('./Routes/about');
 const dependRoute = require('./Routes/depend');
 const postRoute = require('./Routes/post');
 const adminRoute = require('./Routes/admin');
-
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended : true}));
 
