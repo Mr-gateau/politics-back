@@ -3,6 +3,7 @@ require('dotenv').config();
 const postRouter = require('express').Router();
 const connection = require('../conf.js');
 const bcrypt = require('bcrypt');
+const { send } = require('process');
 const saltRounds = 3;
 
 postRouter.get('/all', (req, res) => {
@@ -21,7 +22,7 @@ postRouter.get('/all', (req, res) => {
   postRouter.get('/who/:who', (req, res) => {
     const { who } = req.params;
     console.log(who)
-    connection.query("SELECT post.id, post.title, post.intro, burn, cold FROM post JOIN depends ON post.depend = depends.id ORDER BY cold DESC", who, (err, results) => {
+    connection.query(`SELECT post.id, post.title, post.intro, burn, cold FROM post JOIN depends ON post.depend = depends.id ORDER BY ${who} DESC`, (err, results) => {
       if(err){
         res.status(404).send("Not found");
         console.log(err)
@@ -73,6 +74,24 @@ postRouter.get('/all', (req, res) => {
     }
     })
   })
+
+  postRouter.post('/delete/:id',  cors(), (req, res, next) => {
+    const { id } = req.params;
+    const { name, key } = req.body;
+    console.log(id)
+    console.log(req.body)
+    connection.query("DELETE from post where user = ? AND id = ? AND key_post = ?",[name, id, key], (err,results) => {
+     if(err){
+       console.log(err)
+       res.status(500).send('Erreur de champ...')
+     } else {
+        console.log(name, key)
+       res.status(200).send('Deleted !')
+     }
+      })
+
+    })
+
 
   postRouter.post('/add', (req, res) => {
   
