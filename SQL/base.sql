@@ -31,3 +31,11 @@ CREATE TABLE admins (
     user_name VARCHAR(50),
     password VARCHAR(50)
 );
+
+CREATE TABLE coms (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    commentaire VARCHAR(250),
+    id_article INT,
+    name_commentaire VARCHAR(50),
+    key_commentaire VARCHAR(50)
+);
